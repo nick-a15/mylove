@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
+  <title>Special Date Invitation</title>
 
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -17,7 +17,9 @@
       --yesHover: #ff1f68;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -30,7 +32,6 @@
       padding: 16px;
     }
 
-    /* FULL-SCREEN CONFETTI CANVAS */
     #confettiCanvas {
       position: fixed;
       inset: 0;
@@ -42,7 +43,7 @@
 
     .card {
       width: min(720px, 92vw);
-      padding: 26px 22px;
+      padding: 28px 22px;
       background: var(--card);
       backdrop-filter: blur(10px);
       border-radius: 22px;
@@ -50,16 +51,17 @@
       box-shadow: 0 18px 60px rgba(0,0,0,.15);
     }
 
-    .art {
-      width: min(260px, 80vw);
-      margin: 0 auto 10px;
-      display: block;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
+    .emoji {
+      font-size: 76px;
+      margin-bottom: 8px;
+      animation: heartbeat 1.4s infinite;
     }
 
     h1 {
-      font-size: clamp(26px, 4vw, 44px);
-      margin: 12px 0 18px;
+      font-size: clamp(26px, 4vw, 42px);
+      margin: 16px 0 22px;
+      color: #111827;
+      line-height: 1.2;
     }
 
     .button-zone {
@@ -91,7 +93,10 @@
       background: var(--yes);
       color: #fff;
     }
-    #yesBtn:hover { background: var(--yesHover); }
+
+    #yesBtn:hover {
+      background: var(--yesHover);
+    }
 
     #noBtn {
       left: 62%;
@@ -105,9 +110,36 @@
       opacity: .7;
     }
 
+    .date-options {
+      display: none;
+      margin-top: 20px;
+      animation: pop .35s ease;
+    }
+
+    .date-options h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .date-btn {
+      position: static;
+      transform: none;
+      display: block;
+      width: min(430px, 100%);
+      margin: 14px auto;
+      background: var(--yes);
+      color: white;
+    }
+
+    .date-btn:hover {
+      background: var(--yesHover);
+      transform: scale(1.03);
+    }
+
     .result {
       display: none;
-      margin-top: 18px;
+      margin-top: 20px;
       animation: pop .35s ease;
     }
 
@@ -116,15 +148,46 @@
       margin: 10px 0;
     }
 
-    .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
+    .result p {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 1.4;
+    }
+
+    .celebration-gif {
+      width: min(300px, 90vw);
+      margin: 12px auto 18px;
       display: block;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.14);
+    }
+
+    .send-note {
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      opacity: .75;
+      margin-top: 10px;
     }
 
     @keyframes pop {
-      from { transform: scale(.96); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(.96);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.12);
+      }
     }
   </style>
 </head>
@@ -133,61 +196,46 @@
   <canvas id="confettiCanvas"></canvas>
 
   <main class="card">
-    <!-- ANIMAL WITH HEART -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#f7c7a1"/>
-          <stop offset="1" stop-color="#f2a97b"/>
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d7d"/>
-          <stop offset="1" stop-color="#ff1f68"/>
-        </linearGradient>
-      </defs>
+    <div class="emoji">💖</div>
 
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
-
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
-
-      <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
-      <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
-
-      <circle cx="160" cy="130" r="8"/>
-      <circle cx="220" cy="130" r="8"/>
-
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z"
-            fill="#ff7aa2"/>
-    </svg>
-
-    <h1>nirali will you be my valentine?</h1>
+    <h1 id="mainQuestion">
+      Ohema, will you be free to spend 3 days with me?
+    </h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
       <button id="noBtn">No</button>
     </section>
 
-    <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+    <div class="hint" id="hint">Choose carefully 😭</div>
+
+    <section class="date-options" id="dateOptions">
+      <h2>Which date works best for you? 🥰</h2>
+
+      <button class="date-btn" onclick="chooseDate('14/06/2026 to 17/06/2026')">
+        14/06/2026 to 17/06/2026
+      </button>
+
+      <button class="date-btn" onclick="chooseDate('15/06/2026 to 18/06/2026')">
+        15/06/2026 to 18/06/2026
+      </button>
+    </section>
 
     <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
-      <img
-        class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks"
+      <h2>YAY! 🎉❤️</h2>
+
+      <img 
+        class="celebration-gif"
+        src="https://i0.wp.com/justmaths.co.uk/wp-content/uploads/2016/10/celebration-gif.gif?fit=300%2C136&ssl=1"
+        alt="Celebration GIF"
       />
+
+      <p id="chosenDate"></p>
+      <p>
+        I honestly cannot wait to spend these 3 days with you.
+        I promise to make it special 🥰
+      </p>
+      <p class="send-note" id="sendNote"></p>
     </section>
   </main>
 
@@ -195,10 +243,13 @@
     const zone = document.getElementById("zone");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
-    const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    const mainQuestion = document.getElementById("mainQuestion");
+    const dateOptions = document.getElementById("dateOptions");
+    const result = document.getElementById("result");
+    const chosenDate = document.getElementById("chosenDate");
+    const sendNote = document.getElementById("sendNote");
 
-    /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
 
     function resizeConfettiCanvas() {
@@ -211,7 +262,9 @@
 
     resizeConfettiCanvas();
     window.addEventListener("resize", resizeConfettiCanvas);
-    window.addEventListener("orientationchange", () => setTimeout(resizeConfettiCanvas, 150));
+    window.addEventListener("orientationchange", () => {
+      setTimeout(resizeConfettiCanvas, 150);
+    });
 
     const confettiInstance = confetti.create(confettiCanvas, {
       resize: false,
@@ -227,9 +280,15 @@
           spread: 90,
           startVelocity: 45,
           ticks: 180,
-          origin: { x: Math.random(), y: Math.random() * 0.3 }
+          origin: {
+            x: Math.random(),
+            y: Math.random() * 0.3
+          }
         });
-        if (Date.now() < end) requestAnimationFrame(frame);
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
       })();
 
       setTimeout(() => {
@@ -238,19 +297,21 @@
           spread: 140,
           startVelocity: 60,
           ticks: 220,
-          origin: { x: 0.5, y: 0.55 }
+          origin: {
+            x: 0.5,
+            y: 0.55
+          }
         });
       }, 300);
     }
 
-    /* ---------- YES BUTTON GROWS ---------- */
     let yesScale = 1;
+
     function growYes() {
       yesScale = Math.min(2.2, yesScale + 0.1);
       yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
-    /* ---------- NO BUTTON RUNS AWAY ---------- */
     function clamp(n, min, max) {
       return Math.max(min, Math.min(max, n));
     }
@@ -262,14 +323,15 @@
       let dx = (b.left + b.width / 2) - px;
       let dy = (b.top + b.height / 2) - py;
       let mag = Math.hypot(dx, dy) || 1;
+
       dx /= mag;
       dy /= mag;
 
       let newLeft = (b.left - z.left) + dx * 150;
-      let newTop  = (b.top - z.top) + dy * 150;
+      let newTop = (b.top - z.top) + dy * 150;
 
       newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop  = clamp(newTop, 0, z.height - b.height);
+      newTop = clamp(newTop, 0, z.height - b.height);
 
       noBtn.style.left = newLeft + "px";
       noBtn.style.top = newTop + "px";
@@ -280,26 +342,57 @@
 
     zone.addEventListener("pointermove", e => {
       const b = noBtn.getBoundingClientRect();
+
       const d = Math.hypot(
         (b.left + b.width / 2) - e.clientX,
         (b.top + b.height / 2) - e.clientY
       );
-      if (d < 140) moveNo(e.clientX, e.clientY);
+
+      if (d < 140) {
+        moveNo(e.clientX, e.clientY);
+      }
     });
 
-    noBtn.addEventListener("click", e => e.preventDefault());
+    noBtn.addEventListener("click", e => {
+      e.preventDefault();
+      growYes();
+    });
 
-    /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
-      result.style.display = "block";
+      hint.style.display = "none";
+      mainQuestion.style.display = "none";
+      dateOptions.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
     });
+
+    function chooseDate(date) {
+      dateOptions.style.display = "none";
+      result.style.display = "block";
+      chosenDate.textContent = `You chose: ${date}`;
+
+      resizeConfettiCanvas();
+      fullScreenConfetti();
+
+      /*
+        IMPORTANT:
+        Replace this with your WhatsApp number in international format.
+        Example: if your UK number is 07123456789, write 447123456789.
+      */
+      const phoneNumber = "447XXXXXXXXX";
+
+      const message = `Hey, I picked this date: ${date} ❤️`;
+
+      if (phoneNumber !== "447XXXXXXXXX") {
+        sendNote.textContent = "Opening WhatsApp so you can send me your chosen date...";
+        setTimeout(() => {
+          window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        }, 2500);
+      } else {
+        sendNote.textContent = "Please screenshot this and send it to me so I know which date you picked ❤️";
+      }
+    }
   </script>
 </body>
 </html>
-
-
-
