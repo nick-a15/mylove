@@ -109,7 +109,7 @@
     </div>
     <div class="result" id="resultView">
       <span class="big">🎉</span>
-      <h2>We're going to London!</h2>
+      <h2 id="resultCity">We're going to London!</h2>
       <p>I cannot wait to spend 3 amazing days with you in the city 🥰</p>
       <p class="note">WhatsApp is opening so you can confirm ❤️</p>
     </div>
@@ -118,6 +118,7 @@
     function pick(city) {
       document.getElementById('mainView').style.display = 'none';
       document.getElementById('resultView').style.display = 'block';
+      document.getElementById('resultCity').textContent = "We're going to " + city + "!";
       confetti({ particleCount: 200, spread: 130, origin: { y: 0.6 } });
       const msg = "I picked " + city + " for our 3 days together! ❤️";
       setTimeout(() => {
