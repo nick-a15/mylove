@@ -20,10 +20,27 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at top, #ffeef6, #ffd6e7);
+      background: radial-gradient(circle at top, #f3e8ff, #d8b4fe);
       font-family: Arial, sans-serif;
       padding: 16px;
       overflow: hidden;
+    }
+
+    /* Floating emojis */
+    .floater {
+      position: fixed;
+      font-size: 28px;
+      animation: floatUp linear infinite;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
 
     .card {
@@ -285,6 +302,26 @@
           "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
       }, 2500);
     }
+  </script>
+
+  <script>
+    const emojis = ['💖', '💕', '💗', '💓', '✨', '🌸', '💝', '💞', '🫶', '🌷', '💫', '🩷'];
+
+    function createFloater() {
+      const el = document.createElement('span');
+      el.classList.add('floater');
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (18 + Math.random() * 26) + 'px';
+      const duration = 6 + Math.random() * 8;
+      el.style.animationDuration = duration + 's';
+      el.style.animationDelay = (Math.random() * -duration) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), (duration + 2) * 2000);
+    }
+
+    for (let i = 0; i < 20; i++) createFloater();
+    setInterval(createFloater, 800);
   </script>
 </body>
 </html>
